@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Event;
 use Illuminate\Http\Request;
+use RealRashid\SweetAlert\Facades\Alert;
+
 
 class EventController extends Controller
 {
@@ -34,7 +37,24 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        try {
+            $request->validate([
+                "title" => "required",
+                "start" => "required",
+                "end" => "required",
+                "allDay" => "required",
+                "color" => "required",
+                "textColor" => "required",
+            ]);
+            Event::create($request->all());
+        } catch (\Throwable $th) {
+            Alert::error('error', 'error');
+            return redirect()->back();
+        }
+
+        Alert::success('Success', 'Event ok');
+        return redirect()->back();
     }
 
     /**

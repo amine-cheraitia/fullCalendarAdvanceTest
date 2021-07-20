@@ -86,6 +86,10 @@
                 <label >Text Color</label>
                 <input class="form-control" type="color" name="textColor" >
             </div>
+            <div class="form-group d-flex justify-content-center align-content-center">
+
+                <button class="btn btn-success" type="submit">Add Event</button>
+            </div>
         </form>
     </div>
 </div>
@@ -128,7 +132,7 @@
                 $('#dialog').dialog({
                     title:'Add Event',
                     width:600,
-                    height:700,
+                    height:600,
                     modal:true,
                     show:{effect:'clip',duration:350},
                     hide:{effect:'clip',duration:250},
