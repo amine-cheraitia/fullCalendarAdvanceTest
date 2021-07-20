@@ -7,8 +7,8 @@
         <title>My Calendar</title>
 
         {{-- bootstrap --}}
-        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-
+        {{-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous"> --}}
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.css" integrity="sha512-6g9IGCc67eh+xK03Z8ILcnKLbJnKBW+qpEdoUVD/4hBa2Ghiq5dQgeNOGWJfGoe9tdCRM4GpJMnsRXa2FDJp9Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
         {{-- jquery ui --}}
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/themes/base/jquery-ui.min.css" integrity="sha512-okE4owXD0kfXzgVXBzCDIiSSlpXn3tJbNodngsTnIYPJWjuYhtJ+qMoc0+WUwLHeOwns0wm57Ka903FqQKM1sA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
@@ -26,6 +26,9 @@
         <style>
             body {
                 font-family: 'Nunito', sans-serif;
+            }
+            #dialog{
+                display:none;
             }
         </style>
     </head>
@@ -52,20 +55,65 @@
         <div id="calendar"></div>
     </div>
 </div>
+{{-- day click dialog --}}
+<div id="dialog">
+    <div id="dialog-body">
+        <form id="dayClick" method="POST"  action="{{route('eventStore')}}">
+        @csrf
+            <div class="form-group">
+                <label >Event Title</label>
+                <input class="form-control" type="text" name="title" placeholder="Event Title">
+            </div>
+            <div class="form-group">
+                <label >Start Date/Time</label>
+                <input class="form-control" type="text" name="start" placeholder="Start date & time">
+            </div>
+            <div class="form-group">
+                <label >End Date/Time</label>
+                <input class="form-control" type="text" name="end" placeholder="End date & time">
+            </div>
+            <div class="form-group">
+                <label >All Day</label>
+                <input value="1" type="checkbox" name="allDay" > All Day
+                <input value="0" type="checkbox" name="AllDay" > Partial
 
+            </div>
+            <div class="form-group">
+                <label >Background Color</label>
+                <input class="form-control" type="color" name="color" >
+            </div>
+            <div class="form-group">
+                <label >Text Color</label>
+                <input class="form-control" type="color" name="textColor" >
+            </div>
+        </form>
+    </div>
+</div>
+
+{{--day click dialog end --}}
 
 {{--         <script src="https://code.jquery.com/jquery-3.2.1.min.js"
   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
   crossorigin="anonymous"></script> --}}
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.slim.min.js" integrity="sha512-6ORWJX/LrnSjBzwefdNUyLCMTIsGoNP6NftMy2UAm1JBm6PRZCO1d7OHBStWpVFZLO+RerTvqX/Z9mBFfCJZ4A==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" integrity="sha512-qTXRIMyZIFb8iQcfjXWCO8+M5Tbc38Qi5WzdPOYZHIlZpzBHG3L3by84BBBOiRGiEb7KKtAOAs5qYdUiZiQNNQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  {{-- jquery 3.3.1 --}}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha512-+NqPlbbtM1QqiK8ZAo4Yrj2c4lNQoGv8P79DPtKzj++l5jnN39rHA/xsqn8zE9l0uSoxaCdrOgFs6yjyfbBxSg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="{{asset('js/jquery.min.js')}}"></script>
+  {{-- bootstrap 4.5.0 --}}
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+  {{-- moment js --}}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js" integrity="sha512-mfNZx/jn9sdSuZZ+nSa8cAFbN9XAypCR7+tgzzddbRY4vOat1KxPh6VmWWoLXav4l/bROnIGAxG7tq9fqmV3wg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  {{-- jquery ui --}}
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-<script src="{{asset('js/fullcalendar.js')}}"></script>
+  <script src="{{asset('js/fullcalendar.js')}}"></script>
+  {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/locale/fr.min.js" integrity="sha512-vz2hAYjYuxwqHQAgHPZvry+DTuwemFT/aBIDmgE0cnmYENu/+t8c3u/nX2Ont6e+3m+W6FEKxN1granjgGfr1Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/locale/fr-ca.min.js" integrity="sha512-96yuGZBd0f1nxbm/gfz1mgGTC5vh/37DMvIfoBELVVelXLGG5IBiE793wObhkwrXjZ65oKNsivMfcjVLl5pzcw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
 <script>
-    $(document).ready(function(){
+    jQuery(document).ready(function($){
         var calendar = $('#calendar').fullCalendar({
+            locale: 'fr-ca',
             selectable:true,
-            aspectRatio:2,
+            //aspectRatio:2,
             height:650,
             showNonCurrentDates:false,
             editable:false,
@@ -75,8 +123,29 @@
                 left:'prev,next today',
                 center:'title',
                 right:'year,month,basicWeek,basicDay'
-            }
+            },
+            dayClick:function(date,event,view){
+                $('#dialog').dialog({
+                    title:'Add Event',
+                    width:600,
+                    height:700,
+                    modal:true,
+                    show:{effect:'clip',duration:350},
+                    hide:{effect:'clip',duration:250},
+
+                })
+            },
+            buttonText:{
+  today:    'aujourd\'hui',
+  month:    'mois',
+  week:     'semaine',
+  day:      'jour',
+  year:     'année'
+}
+
         })
+        calendar.getOption('locale');
+        calendar.setOption('locale', 'fr');
     });
 </script>
 
