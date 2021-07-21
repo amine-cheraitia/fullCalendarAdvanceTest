@@ -16,7 +16,9 @@ class EventController extends Controller
      */
     public function index()
     {
-        //
+        $event = Event::Latest()->get();
+        return response()->json($event, 200);
+        return view('welcome');
     }
 
     /**

@@ -66,11 +66,11 @@
             </div>
             <div class="form-group">
                 <label >Start Date/Time</label>
-                <input class="form-control" type="text" name="start" placeholder="Start date & time">
+                <input id="start" class="form-control" type="text" name="start" placeholder="Start date & time">
             </div>
             <div class="form-group">
                 <label >End Date/Time</label>
-                <input class="form-control" type="text" name="end" placeholder="End date & time">
+                <input id="end" class="form-control" type="text" name="end" placeholder="End date & time">
             </div>
             <div class="form-group">
                 <label >All Day</label>
@@ -100,27 +100,35 @@
   integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
   crossorigin="anonymous"></script> --}}
   {{-- jquery 3.3.1 --}}
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha512-+NqPlbbtM1QqiK8ZAo4Yrj2c4lNQoGv8P79DPtKzj++l5jnN39rHA/xsqn8zE9l0uSoxaCdrOgFs6yjyfbBxSg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <script src="{{asset('js/jquery.min.js')}}"></script>
   {{-- bootstrap 4.5.0 --}}
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js" ></script>
   {{-- moment js --}}
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js" integrity="sha512-mfNZx/jn9sdSuZZ+nSa8cAFbN9XAypCR7+tgzzddbRY4vOat1KxPh6VmWWoLXav4l/bROnIGAxG7tq9fqmV3wg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js" ></script>
   {{-- jquery ui --}}
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" integrity="sha512-uto9mlQzrs59VwILcLiRYeLKPPbS/bT71da/OEBYEwcdNUk8jYIy+D176RYoop1Da+f9mvkYrmj5MCLZWEtQuA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" ></script>
   <script src="{{asset('js/fullcalendar.js')}}"></script>
   {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/locale/fr.min.js" integrity="sha512-vz2hAYjYuxwqHQAgHPZvry+DTuwemFT/aBIDmgE0cnmYENu/+t8c3u/nX2Ont6e+3m+W6FEKxN1granjgGfr1Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/locale/fr-ca.min.js" integrity="sha512-96yuGZBd0f1nxbm/gfz1mgGTC5vh/37DMvIfoBELVVelXLGG5IBiE793wObhkwrXjZ65oKNsivMfcjVLl5pzcw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/locale/fr-ca.min.js" ></script>
 
 <script>
     jQuery(document).ready(function($){
+        function converet(str){
+
+        const date = new Date(str);
+        //YYYY-MM-DD format
+        return  date.toISOString().slice(0, 19).replace('T', ' ');
+        //console.log(mysqlDate);
+        }
         var calendar = $('#calendar').fullCalendar({
             locale: 'fr-ca',
             selectable:true,
+            selectHelper:true,
             //aspectRatio:2,
             height:650,
             showNonCurrentDates:false,
-            editable:false,
+            editable:true,
             defaultView:'month',
             yearColumns:3,
             header:{
@@ -128,7 +136,21 @@
                 center:'title',
                 right:'year,month,basicWeek,basicDay'
             },
+            events:"{{ route('allEvent')}}",
+            select:function(start,end){
+                $('#start').val(converet(start));
+                $('#end').val(converet(end));
+                $('#dialog').dialog({
+                    title:'Add Event',
+                    width:600,
+                    height:600,
+                    modal:true,
+                    show:{effect:'clip',duration:350},
+                    hide:{effect:'clip',duration:250},
+                })
+            },
             dayClick:function(date,event,view){
+                $('#start').val(converet(date));
                 $('#dialog').dialog({
                     title:'Add Event',
                     width:600,
@@ -139,17 +161,19 @@
 
                 })
             },
+
+
             buttonText:{
-  today:    'aujourd\'hui',
-  month:    'mois',
-  week:     'semaine',
-  day:      'jour',
-  year:     'année'
-}
+                today:    'aujourd\'hui',
+                month:    'mois',
+                week:     'semaine',
+                day:      'jour',
+                year:     'année'
+                }
 
         })
-        calendar.getOption('locale');
-        calendar.setOption('locale', 'fr');
+        // calendar.getOption('locale');
+        // calendar.setOption('locale', 'fr');
     });
 </script>
 
