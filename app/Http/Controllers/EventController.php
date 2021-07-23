@@ -17,8 +17,9 @@ class EventController extends Controller
     public function index()
     {
         $event = Event::Latest()->get();
+
         return response()->json($event, 200);
-        return view('welcome');
+        //return view('welcome');
     }
 
     /**
@@ -49,13 +50,15 @@ class EventController extends Controller
                 "color" => "required",
                 "textColor" => "required",
             ]);
+            // $event = Event::Latest()->get();
+            // dd($event);
             Event::create($request->all());
         } catch (\Throwable $th) {
-            Alert::error('error', 'error');
+            alert()->success('error', 'error');
             return redirect()->back();
         }
 
-        Alert::success('Success', 'Event ok');
+        alert()->success('Success', 'Event ok');
         return redirect()->back();
     }
 

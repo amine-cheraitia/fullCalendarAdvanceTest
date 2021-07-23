@@ -52,6 +52,9 @@
         <h1 class="text-center">Full calendar</h1>
     </div>
     <div class="container">
+        <div class="mb-5">
+            <button class="btn btn-danger" id="addEventButton">Add Event</button>
+        </div>
         <div id="calendar"></div>
     </div>
 </div>
@@ -121,6 +124,17 @@
         return  date.toISOString().slice(0, 19).replace('T', ' ');
         //console.log(mysqlDate);
         }
+        $('#addEventButton').on('click',function(){
+            $('#dialog').dialog({
+                    title:'Add Event',
+                    width:600,
+                    height:600,
+                    modal:true,
+                    show:{effect:'clip',duration:350},
+                    hide:{effect:'clip',duration:250},
+                })
+        })
+
         var calendar = $('#calendar').fullCalendar({
             locale: 'fr-ca',
             selectable:true,
@@ -176,6 +190,6 @@
         // calendar.setOption('locale', 'fr');
     });
 </script>
-
+@include('sweetalert::alert')
     </body>
 </html>
