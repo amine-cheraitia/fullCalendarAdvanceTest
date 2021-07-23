@@ -47,149 +47,149 @@
                     @endauth
                 </div>
             @endif
-<div class="content">
-    <div class="jumbotron">
-        <h1 class="text-center">Full calendar</h1>
-    </div>
-    <div class="container">
-        <div class="mb-5">
-            <button class="btn btn-danger" id="addEventButton">Add Event</button>
+        <div class="content">
+            <div class="jumbotron">
+                <h1 class="text-center">Full calendar</h1>
+            </div>
+            <div class="container">
+                <div class="mb-5">
+                    <button class="btn btn-danger" id="addEventButton">Add Event</button>
+                </div>
+                <div id="calendar"></div>
+            </div>
         </div>
-        <div id="calendar"></div>
-    </div>
-</div>
-{{-- day click dialog --}}
-<div id="dialog">
-    <div id="dialog-body">
-        <form id="dayClick" method="POST"  action="{{route('eventStore')}}">
-        @csrf
-            <div class="form-group">
-                <label >Event Title</label>
-                <input class="form-control" type="text" name="title" placeholder="Event Title">
-            </div>
-            <div class="form-group">
-                <label >Start Date/Time</label>
-                <input id="start" class="form-control" type="text" name="start" placeholder="Start date & time">
-            </div>
-            <div class="form-group">
-                <label >End Date/Time</label>
-                <input id="end" class="form-control" type="text" name="end" placeholder="End date & time">
-            </div>
-            <div class="form-group">
-                <label >All Day</label>
-                <input value="1" type="checkbox" name="allDay" > All Day
-                <input value="0" type="checkbox" name="AllDay" > Partial
+        {{-- day click dialog --}}
+        <div id="dialog">
+            <div id="dialog-body">
+                <form id="dayClick" method="POST"  action="{{route('eventStore')}}">
+                @csrf
+                    <div class="form-group">
+                        <label >Event Title</label>
+                        <input class="form-control" type="text" name="title" placeholder="Event Title">
+                    </div>
+                    <div class="form-group">
+                        <label >Start Date/Time</label>
+                        <input id="start" class="form-control" type="text" name="start" placeholder="Start date & time">
+                    </div>
+                    <div class="form-group">
+                        <label >End Date/Time</label>
+                        <input id="end" class="form-control" type="text" name="end" placeholder="End date & time">
+                    </div>
+                    <div class="form-group">
+                        <label >All Day</label>
+                        <input value="1" type="checkbox" name="allDay" > All Day
+                        <input value="0" type="checkbox" name="AllDay" > Partial
 
+                    </div>
+                    <div class="form-group">
+                        <label >Background Color</label>
+                        <input class="form-control" type="color" name="color" >
+                    </div>
+                    <div class="form-group">
+                        <label >Text Color</label>
+                        <input class="form-control" type="color" name="textColor" >
+                    </div>
+                    <div class="form-group d-flex justify-content-center align-content-center">
+
+                        <button class="btn btn-success" type="submit">Add Event</button>
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <label >Background Color</label>
-                <input class="form-control" type="color" name="color" >
-            </div>
-            <div class="form-group">
-                <label >Text Color</label>
-                <input class="form-control" type="color" name="textColor" >
-            </div>
-            <div class="form-group d-flex justify-content-center align-content-center">
+        </div>
 
-                <button class="btn btn-success" type="submit">Add Event</button>
-            </div>
-        </form>
-    </div>
-</div>
+    {{--day click dialog end --}}
 
-{{--day click dialog end --}}
+    {{--         <script src="https://code.jquery.com/jquery-3.2.1.min.js"
+    integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+    crossorigin="anonymous"></script> --}}
+    {{-- jquery 3.3.1 --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="{{asset('js/jquery.min.js')}}"></script>
+    {{-- bootstrap 4.5.0 --}}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js" ></script>
+    {{-- moment js --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js" ></script>
+    {{-- jquery ui --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" ></script>
+    <script src="{{asset('js/fullcalendar.js')}}"></script>
+    {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/locale/fr.min.js" integrity="sha512-vz2hAYjYuxwqHQAgHPZvry+DTuwemFT/aBIDmgE0cnmYENu/+t8c3u/nX2Ont6e+3m+W6FEKxN1granjgGfr1Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/locale/fr-ca.min.js" ></script>
 
-{{--         <script src="https://code.jquery.com/jquery-3.2.1.min.js"
-  integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
-  crossorigin="anonymous"></script> --}}
-  {{-- jquery 3.3.1 --}}
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-  <script src="{{asset('js/jquery.min.js')}}"></script>
-  {{-- bootstrap 4.5.0 --}}
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js" ></script>
-  {{-- moment js --}}
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js" ></script>
-  {{-- jquery ui --}}
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js" ></script>
-  <script src="{{asset('js/fullcalendar.js')}}"></script>
-  {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/locale/fr.min.js" integrity="sha512-vz2hAYjYuxwqHQAgHPZvry+DTuwemFT/aBIDmgE0cnmYENu/+t8c3u/nX2Ont6e+3m+W6FEKxN1granjgGfr1Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> --}}
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/locale/fr-ca.min.js" ></script>
+    <script>
+        jQuery(document).ready(function($){
+            function converet(str){
 
-<script>
-    jQuery(document).ready(function($){
-        function converet(str){
-
-        const date = new Date(str);
-        //YYYY-MM-DD format
-        return  date.toISOString().slice(0, 19).replace('T', ' ');
-        //console.log(mysqlDate);
-        }
-        $('#addEventButton').on('click',function(){
-            $('#dialog').dialog({
-                    title:'Add Event',
-                    width:600,
-                    height:600,
-                    modal:true,
-                    show:{effect:'clip',duration:350},
-                    hide:{effect:'clip',duration:250},
-                })
-        })
-
-        var calendar = $('#calendar').fullCalendar({
-            locale: 'fr-ca',
-            selectable:true,
-            selectHelper:true,
-            //aspectRatio:2,
-            height:650,
-            showNonCurrentDates:false,
-            editable:true,
-            defaultView:'month',
-            yearColumns:3,
-            header:{
-                left:'prev,next today',
-                center:'title',
-                right:'year,month,basicWeek,basicDay'
-            },
-            events:"{{ route('allEvent')}}",
-            select:function(start,end){
-                $('#start').val(converet(start));
-                $('#end').val(converet(end));
+            const date = new Date(str);
+            //YYYY-MM-DD format
+            return  date.toISOString().slice(0, 19).replace('T', ' ');
+            //console.log(mysqlDate);
+            }
+            $('#addEventButton').on('click',function(){
                 $('#dialog').dialog({
-                    title:'Add Event',
-                    width:600,
-                    height:600,
-                    modal:true,
-                    show:{effect:'clip',duration:350},
-                    hide:{effect:'clip',duration:250},
-                })
-            },
-            dayClick:function(date,event,view){
-                $('#start').val(converet(date));
-                $('#dialog').dialog({
-                    title:'Add Event',
-                    width:600,
-                    height:600,
-                    modal:true,
-                    show:{effect:'clip',duration:350},
-                    hide:{effect:'clip',duration:250},
+                        title:'Add Event',
+                        width:600,
+                        height:600,
+                        modal:true,
+                        show:{effect:'clip',duration:350},
+                        hide:{effect:'clip',duration:250},
+                    })
+            })
 
-                })
-            },
+            var calendar = $('#calendar').fullCalendar({
+                locale: 'fr-ca',
+                selectable:true,
+                selectHelper:true,
+                //aspectRatio:2,
+                height:650,
+                showNonCurrentDates:false,
+                editable:true,
+                defaultView:'month',
+                yearColumns:3,
+                header:{
+                    left:'prev,next today',
+                    center:'title',
+                    right:'year,month,basicWeek,basicDay'
+                },
+                events:"{{ route('allEvent')}}",
+                select:function(start,end){
+                    $('#start').val(converet(start));
+                    $('#end').val(converet(end));
+                    $('#dialog').dialog({
+                        title:'Add Event',
+                        width:600,
+                        height:600,
+                        modal:true,
+                        show:{effect:'clip',duration:350},
+                        hide:{effect:'clip',duration:250},
+                    })
+                },
+                dayClick:function(date,event,view){
+                    $('#start').val(converet(date));
+                    $('#dialog').dialog({
+                        title:'Add Event',
+                        width:600,
+                        height:600,
+                        modal:true,
+                        show:{effect:'clip',duration:350},
+                        hide:{effect:'clip',duration:250},
+
+                    })
+                },
 
 
-            buttonText:{
-                today:    'aujourd\'hui',
-                month:    'mois',
-                week:     'semaine',
-                day:      'jour',
-                year:     'année'
-                }
+                buttonText:{
+                    today:    'aujourd\'hui',
+                    month:    'mois',
+                    week:     'semaine',
+                    day:      'jour',
+                    year:     'année'
+                    }
 
-        })
-        // calendar.getOption('locale');
-        // calendar.setOption('locale', 'fr');
-    });
-</script>
-@include('sweetalert::alert')
+            })
+            // calendar.getOption('locale');
+            // calendar.setOption('locale', 'fr');
+        });
+    </script>
+    @include('sweetalert::alert')
     </body>
 </html>
