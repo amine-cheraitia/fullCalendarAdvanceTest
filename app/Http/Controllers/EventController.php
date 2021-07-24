@@ -52,13 +52,27 @@ class EventController extends Controller
             ]);
             // $event = Event::Latest()->get();
             // dd($event);
-            Event::create($request->all());
+            if (empty($request->id)) {
+                Event::create($request->all());
+                alert()->success('Success', 'Event ok');
+            } else {
+                Event::where('id', $request->id)->update([
+                    "title" => $request->title,
+                    "start" => $request->start,
+                    "end" => $request->end,
+                    "allDay" => $request->allDay,
+                    "color" => $request->color,
+                    "textColor" => $request->textColor,
+
+                ]);
+                alert()->success('Update', 'successfull update');
+            }
         } catch (\Throwable $th) {
-            alert()->success('error', 'error');
+            alert()->error('error', $th->getMessage());
             return redirect()->back();
         }
 
-        alert()->success('Success', 'Event ok');
+
         return redirect()->back();
     }
 

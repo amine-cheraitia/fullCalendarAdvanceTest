@@ -65,7 +65,7 @@
                 @csrf
                     <div class="form-group">
                         <label >Event Title</label>
-                        <input class="form-control" type="text" name="title" placeholder="Event Title">
+                        <input class="form-control" id="title" type="text" name="title" placeholder="Event Title">
                     </div>
                     <div class="form-group">
                         <label >Start Date/Time</label>
@@ -77,21 +77,22 @@
                     </div>
                     <div class="form-group">
                         <label >All Day</label>
-                        <input value="1" type="checkbox" name="allDay" > All Day
+                        <input value="1" type="checkbox" name="allDay" checked> All Day
                         <input value="0" type="checkbox" name="AllDay" > Partial
 
                     </div>
                     <div class="form-group">
                         <label >Background Color</label>
-                        <input class="form-control" type="color" name="color" >
+                        <input class="form-control" id="color" type="color" name="color" >
                     </div>
                     <div class="form-group">
                         <label >Text Color</label>
-                        <input class="form-control" type="color" name="textColor" >
+                        <input class="form-control" id="textColor" type="color" name="textColor" >
                     </div>
+                    <input type="hidden" id="eventId" name="id">
                     <div class="form-group d-flex justify-content-center align-content-center">
 
-                        <button class="btn btn-success" type="submit">Add Event</button>
+                        <button class="btn btn-success" type="submit" id="update">Add Event</button>
                     </div>
                 </form>
             </div>
@@ -151,6 +152,27 @@
                     right:'year,month,basicWeek,basicDay'
                 },
                 events:"{{ route('allEvent')}}",
+                eventClick:function(event){
+                    // alert(event.id)
+                    // console.log(event.event_id);
+                    $('#title').val(event.title);
+                    $('#start').val(converet(event.start))
+                    $('#end').val(converet(event.end))
+                    $('#color').val(event.color)
+                    $('#textColor').val(event.textColor)
+                    $('#eventId').val(event.id)
+                    $('#update').html('Update')
+                    $('#dialog').dialog({
+                        title:'edit Event',
+                        width:600,
+                        height:600,
+                        modal:true,
+                        show:{effect:'clip',duration:350},
+                        hide:{effect:'clip',duration:250},
+
+                    })
+                }
+                ,
                 select:function(start,end){
                     $('#start').val(converet(start));
                     $('#end').val(converet(end));
@@ -164,6 +186,11 @@
                     })
                 },
                 dayClick:function(date,event,view){
+                    $('#title').val('');
+                    $('#color').val('')
+                    $('#textColor').val('')
+                    $('#event_id').val('')
+                    $('#update').html('Add Event')
                     $('#start').val(converet(date));
                     $('#dialog').dialog({
                         title:'Add Event',
@@ -175,6 +202,7 @@
 
                     })
                 },
+
 
 
                 buttonText:{
