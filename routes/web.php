@@ -18,3 +18,6 @@ Route::get('/', function () {
 });
 Route::get('index', 'App\Http\Controllers\EventController@index')->name('allEvent');
 Route::post('store', 'App\Http\Controllers\EventController@store')->name('eventStore');
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
