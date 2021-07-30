@@ -182,7 +182,6 @@
                         modal:true,
                         show:{effect:'clip',duration:350},
                         hide:{effect:'clip',duration:250},
-
                     })
                 }
                 ,
