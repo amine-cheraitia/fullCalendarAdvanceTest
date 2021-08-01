@@ -167,7 +167,7 @@
                 @if (Auth::user()->role_id==0)
                 eventClick:function(event){
                     // alert(event.id) //
-                    // console.log(event.event_id);
+                    // console.log(event.event_id); //
                     $('#title').val(event.title);
                     $('#start').val(converet(event.start))
                     $('#end').val(converet(event.end))
