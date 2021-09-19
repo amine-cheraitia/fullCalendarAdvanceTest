@@ -15,6 +15,11 @@
         {{-- css fullcalendar --}}
         <link rel="stylesheet" href="{{asset('css/fullcalendar.css')}}">
 
+        {{-- datetimepicker --}}
+        <script src="js/jquery.datetimepicker.full.min.js"></script>
+        <script src="js/jquery.js"></script>
+        <link rel="stylesheet" href="{{asset('css/jquery.datetimepicker.min.css')}}">
+
         {{-- mix --}}
         {{-- <link rel="stylesheet" href="{{asset('app.css')}}"> --}}
 
@@ -76,18 +81,20 @@
                         <label >Event Title</label>
                         <input class="form-control" id="title" type="text" name="title" placeholder="Event Title">
                     </div>
+                    <input id="start2">
                     <div class="form-group">
                         <label >Start Date/Time</label>
-                        <input id="start" class="form-control" type="date" name="start" placeholder="Start date & time">
+                        <input id="start" class="form-control" name="start" placeholder="Start date & time">
                     </div>
                     <div class="form-group">
                         <label >End Date/Time</label>
-                        <input id="end" class="form-control" type="text" name="end" placeholder="End date & time">
+                        {{-- <input id="end" class="form-control" type="text" name="end" placeholder="End date & time"> --}}
+                        <input id="end" class="form-control" name="end" placeholder="End date & time">
                     </div>
                     <div class="form-group">
                         <label >All Day</label>
                         <input value="1" type="checkbox" name="allDay" checked> All Day
-                        <input value="0" type="checkbox" name="AllDay" > Partial
+                        <input value="0" type="checkbox" name="allDay" > Partial
 
                     </div>
                     <div class="form-group">
@@ -146,6 +153,8 @@
             })
 
             var calendar = $('#calendar').fullCalendar({
+                allDay:false,
+                allDayDefault: false,
                 locale: 'fr-ca',
                 selectable:true,
                 selectHelper:true,
@@ -158,7 +167,7 @@
                 header:{
                     left:'prev,next today',
                     center:'title',
-                    right:'year,month,basicWeek,basicDay'
+                    right:'year,month,basicWeek,basicDay,agendaWeek',
                 },
                 events:"{{ route('allEvent')}}",
                 @auth()
@@ -170,6 +179,7 @@
                     // console.log(event.event_id); //
                     $('#title').val(event.title);
                     $('#start').val(converet(event.start))
+                    // console.log($('#start').val());
                     $('#end').val(converet(event.end))
                     $('#color').val(event.color)
                     $('#textColor').val(event.textColor)
@@ -187,6 +197,7 @@
                 ,
                 select:function(start,end){
                     $('#start').val(converet(start));
+                    // console.log($('#start').val());
                     $('#end').val(converet(end));
                     $('#dialog').dialog({
                         title:'Add Event',
@@ -203,6 +214,7 @@
                     $('#textColor').val('')
                     $('#event_id').val('')
                     $('#update').html('Add Event')
+
                     $('#start').val(converet(date));
                     $('#dialog').dialog({
                         title:'Add Event',
@@ -226,10 +238,16 @@
                     }
 
             })
+            $('#end').datetimepicker();
+            $('#start').datetimepicker({
+                format:"Y-m-d H:i:i"
+            });
             // calendar.getOption('locale');
             // calendar.setOption('locale', 'fr');
         });
     </script>
+           <script src="js/jquery.datetimepicker.full.min.js"></script>
+           <script src="js/jquery.js"></script>
     @include('sweetalert::alert')
     </body>
 </html>
